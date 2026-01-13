@@ -3,10 +3,10 @@ const  mongoose = require("mongoose");
 const connectDB =  async ()=>{
    try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("MongoDb Connected");
+    console.log("MongoDb  Atlas Connected");
     
    } catch (error) {
-    console.error(error.message);
+    console.error("MongoDB connection error:", error.message);
     process.exit(1);
 
    }
