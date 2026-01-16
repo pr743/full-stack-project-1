@@ -23,7 +23,9 @@ exports.getAllResults = async (req, res) => {
   try {
     const results = await Result.find()
       .populate("studentId")
-      .populate("instituteId");
+      .populate("instituteId")
+      .populate("classLevel");
+
     res.json(results);
   } catch (error) {
     res.status(500).json({ message: "error loading result" });
