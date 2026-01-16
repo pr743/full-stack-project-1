@@ -11,9 +11,6 @@ const JWT_SECRET = process.env.JWT_SECRET;
 exports.adminRegister = async (req, res) => {
   try {
     const { name, email, password, phone } = req.body;
-    console.log("Received body:",req.body);
-
-
     if (!name || !email || !password || !phone) {
       return res.status(400).json({ message: "All fields are required" });
     }
