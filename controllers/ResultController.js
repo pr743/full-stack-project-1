@@ -28,6 +28,7 @@ exports.createResult = async (req, res) => {
       percentage: req.body.percentage,
       overallStatus: req.body.overallStatus,
       overallGrade: req.body.overallGrade,
+      date: req.body.date || new Date(),
     });
     await result.save();
 
