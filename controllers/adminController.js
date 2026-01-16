@@ -1,9 +1,7 @@
 const Admin = require("../models/Admin");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { sendOtp } = require("../utils/sendOtp");
-const { sendEmail } = require("../utils/sendOtp"); // rename sendOtp to sendEmail if you like
-
+const { sendOtp , sendEmail } = require("../utils/sendOtp");
 const crypto = require("crypto");
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -30,7 +28,7 @@ exports.adminRegister = async (req, res) => {
       isVerified: false,
     });
 
-    res.json({
+    res.status(201).json({
       message: "Admin registered successfully",
       admin: {
         id: admin._id,
@@ -67,6 +65,7 @@ exports.adminLogin = async (req, res) => {
 
     res.json({ message: "OTP sent to email. Please verify." });
   } catch (error) {
+    console.error("Admin Login Error:", error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -148,7 +147,7 @@ exports.forgotPassword = async (req, res) => {
     admin.resetTokenExpiry = Date.now() + 15 * 60 * 1000; 
     await admin.save();
 
-    const resetUrl = `http://localhost:5173/admin/reset-password?token=${resetToken}`;
+    const resetUrl = `${process.env.FRONTEND_URL}/admin/reset-password?token=${resetToken}`;
 
     await sendEmail(
       admin.email,

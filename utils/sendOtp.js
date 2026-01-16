@@ -18,7 +18,7 @@ const sendOtp = async (to, otp) => {
         <h2>OTP Verification</h2>
         <p>Your OTP is:</p>
         <h1 style="letter-spacing:5px;">${otp}</h1>
-        <p>This OTP is valid for <b>20 seconds</b>.</p>
+        <p>This OTP is valid for <b>30 seconds</b>.</p>
       `,
     });
 
