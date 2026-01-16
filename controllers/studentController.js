@@ -39,6 +39,7 @@ exports.createStudent = async (req, res) => {
       type,
       classOrCourse,      
       instituteId,
+
     });
 
     return res.status(200).json({
@@ -119,16 +120,16 @@ exports.getAllStudents = async (req, res) => {
       instituteId: s.instituteId?._id || "",
       instituteName: s.instituteId?.name || "N/A",
       instituteType: s.instituteId?.type || "N/A",
-      type:s.type
-    }));
+      type:s.type,
+      classLevel :   s.student.classLevel || "",
 
+    }));
     return res.status(200).json(formatted);
   } catch (error) {
     console.error("Get All Students Error:", error);
     res.status(500).json({ error: error.message });
   }
 };
-
 
 
 exports.getStudentProfile = async (req, res) => {
