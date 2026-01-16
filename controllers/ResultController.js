@@ -17,7 +17,7 @@ exports.createResult = async (req, res) => {
 
     const result = new Result({
       ...req.body,
-      classLevel,
+       classLevel,
     });
     await result.save();
 
@@ -57,6 +57,11 @@ exports.getResultByStudent = async (req, res) => {
 exports.publishResult = async (req, res) => {
   try {
     const { id } = req.params;
+
+
+    if (!mongoose.Types.ObjectId.isValid(id)){
+      return res.status(400).json({ message: "Invalid result ID" });
+    }
 
     const results = await Result.findById(id);
 

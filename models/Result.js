@@ -13,6 +13,12 @@ const resultSchema = new mongoose.Schema({
     required: true,
   },
 
+   classLevel: {
+  type: String,
+  required: true,
+},
+
+
   type: {
     type: String,
     enum: ["regular", "private", "distance"],
