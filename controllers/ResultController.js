@@ -4,20 +4,30 @@ const mongoose = require("mongoose");
 
 exports.createResult = async (req, res) => {
   try {
-    let { studentId, classLevel } = req.body;
-    
+    let { studentId, classLevel , types } = req.body;
+
     if (!classLevel && studentId) {
-      const student = await Student.findById(studentId);
+      const student = await Student.findById(studentId).select("classLevel");
       if (!student) {
         return res.status(404).json({ message: "Student not found" });
       }
-
-      classLevel = student.classLevel;
+      classLevel = student.classLevel; 
     }
 
+    if(!classLevel){
+      return res.status(400).json({ message: "Class level is required" });
+    }
     const result = new Result({
-      ...req.body,
-       classLevel,
+      studentId,
+      instituteId: req.body.instituteId,
+      classLevel,
+      type: req.body.type || "regular",
+      stream: req.body.stream,
+      subjectResult: req.body.subjectResult,
+      total: req.body.total,
+      percentage: req.body.percentage,
+      overallStatus: req.body.overallStatus,
+      overallGrade: req.body.overallGrade,
     });
     await result.save();
 
