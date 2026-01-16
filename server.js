@@ -10,18 +10,17 @@ const PORT = process.env.PORT   || 5000;
 
 connectDB(); 
 
-const CLIENT_URL = process.env.CLIENT_URL || "*";
+const CLIENT_URL = process.env.CLIENT_URL;
 
 app.use(
   cors({
     origin: CLIENT_URL,
-    credentials:true,
   })
 );
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("Student Result Backend API Running!");
 });
 
