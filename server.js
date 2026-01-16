@@ -10,12 +10,10 @@ const PORT = process.env.PORT   || 5000;
 
 connectDB(); 
 
-const CLIENT_URL = process.env.CLIENT_URL;
 
 app.use(
   cors({
-    origin: CLIENT_URL,
-    credentials: true,
+    origin: "*",
   })
 );
 
