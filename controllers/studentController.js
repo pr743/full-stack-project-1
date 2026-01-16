@@ -116,13 +116,12 @@ exports.getAllStudents = async (req, res) => {
       _id: s._id,
       name: s.name,
       rollNo: s.rollNo,
+      classLevel: s.classLevel || "N/A",
       classOrCourse: s.classOrCourse || "",
       instituteId: s.instituteId?._id || "",
       instituteName: s.instituteId?.name || "N/A",
       instituteType: s.instituteId?.type || "N/A",
       type:s.type,
-      classLevel :   s.student.classLevel || "",
-
     }));
     return res.status(200).json(formatted);
   } catch (error) {
