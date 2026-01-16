@@ -19,7 +19,7 @@ app.use(
 
 app.use(express.json());
 
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Student Result Backend API Running!");
 });
 
