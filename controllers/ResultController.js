@@ -36,8 +36,8 @@ exports.createResult = async (req, res) => {
 exports.getAllResults = async (req, res) => {
   try {
     const results = await Result.find()
-      .populate("studentId", "name  rollNo classLevel")
-      .populate("instituteId ", "name");
+      .populate("studentId")
+      .populate("instituteId");
 
     res.json(results);
   } catch (error) {
@@ -71,7 +71,11 @@ exports.publishResult = async (req, res) => {
     results.isPublished = true;
 
     await results.save();
-    res.json({ message: "Result published successfully" }, results);
+    res.status(200).json({
+  message: "Result published successfully",
+  data: results,
+});
+
   } catch (error) {
     console.error("Publish Result Error:", error);
     res.status(500).json({ message: "error to result published" });
