@@ -108,15 +108,10 @@ exports.studentLogin = async (req, res) => {
 exports.getAllStudents = async (req, res) => {
   try {
     const students = await Student.find().populate({path:"instituteId",select:"name type"});
-
-
-   
-
     const formatted = students.map((s) => ({
       _id: s._id,
       name: s.name,
       rollNo: s.rollNo,
-      classLevel: s.classLevel || "N/A",
       classOrCourse: s.classOrCourse || "",
       instituteId: s.instituteId?._id || "",
       instituteName: s.instituteId?.name || "N/A",

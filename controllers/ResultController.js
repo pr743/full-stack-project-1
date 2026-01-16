@@ -3,19 +3,21 @@ const Student = require("../models/Student");
 const mongoose = require("mongoose");
 
 exports.createResult = async (req, res) => {
-
   try {
+    const { studentId, classLevel } = req.body;
 
-    const { studentId} = req.body;
+    if (!classLevel && studentId) {
+      const student = await Student.findById(studentId);
+      if (!student) {
+        return res.status(404).json({ message: "Student not found" });
+      }
 
-    const student  = await Student.findById(studentId);
-    if(!student){
-      return res.status(404).json({ message: "Student not found" });
+      classLevel = student.classLevel;
     }
 
     const result = new Result({
       ...req.body,
-      classLevel : student.classLevel,
+      classLevel,
     });
     await result.save();
 
@@ -35,7 +37,7 @@ exports.getAllResults = async (req, res) => {
   try {
     const results = await Result.find()
       .populate("studentId", "name  rollNo classLevel")
-      .populate("instituteId ","name"); 
+      .populate("instituteId ", "name");
 
     res.json(results);
   } catch (error) {

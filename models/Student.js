@@ -29,10 +29,6 @@ const studentSchema = new mongoose.Schema(
       type: String,
     },
 
-    classLevel:{
-      type: String,
-      required: true,
-    },
     instituteId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Institute",
