@@ -53,8 +53,6 @@ exports.adminLogin = async (req, res) => {
     }
     email = email.trim().toLowerCase();
 
-
-
     const admin = await Admin.findOne({ email });
     if (!admin) return res.status(404).json({ message: "Admin not found" });
 
