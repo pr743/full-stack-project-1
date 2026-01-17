@@ -13,6 +13,8 @@ exports.adminRegister = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
+    email = email.trim().toLowerCase();
+
     const existingAdmin = await Admin.findOne({ email });
     if (existingAdmin) {
       return res.status(400).json({ message: "Admin already exists" });
@@ -45,8 +47,13 @@ exports.adminRegister = async (req, res) => {
 exports.adminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password)
+    if (!email || !password){
       return res.status(400).json({ message: "Email & Password required" });
+
+    }
+    email = email.trim().toLowerCase();
+
+
 
     const admin = await Admin.findOne({ email });
     if (!admin) return res.status(404).json({ message: "Admin not found" });
@@ -74,7 +81,14 @@ exports.verifyAdminOTP = async (req, res) => {
   try {
     const { email, otp } = req.body;
 
-    const admin = await Admin.findOne({ email : email.trim() });
+
+    if(!email || !otp){
+      return res.status(400).json({ message: "Email & OTP required" });
+    }
+
+    email = email.trim().toLowerCase();
+
+    const admin = await Admin.findOne({email});
     if (!admin) return res.status(404).json({ message: "Admin not found" });
 
     if (!admin.otp || admin.otpExpireAt < Date.now()){
@@ -115,6 +129,8 @@ exports.resendOtp = async (req, res) => {
     const { email } = req.body;
     if (!email) return res.status(400).json({ message: "Email required" });
 
+    email = email.trim().toLowerCase();
+
     const admin = await Admin.findOne({ email });
     if (!admin) return res.status(404).json({ message: "Admin not found" });
 
@@ -135,14 +151,14 @@ exports.resendOtp = async (req, res) => {
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
+    email = email.trim().toLowerCase();
     const admin = await Admin.findOne({ email });
     if (!admin) return res.status(404).json({ message: "Email not found" });
 
     const resetToken = crypto.randomBytes(32).toString("hex");
-
-
-
     const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+
+
     admin.resetToken = hashedToken;
     admin.resetTokenExpiry = Date.now() + 15 * 60 * 1000; 
     await admin.save();
@@ -189,7 +205,6 @@ exports.resetPassword = async (req, res) => {
     const jwtToken = jwt.sign({ id: admin._id, role: "admin" }, JWT_SECRET, {
       expiresIn: "1d",
     });
-
     res.json({
       message: "Password reset successful",
       token: jwtToken,
