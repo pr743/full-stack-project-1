@@ -23,7 +23,7 @@ const sendOtp = async (to, otp) => {
       },
       {
         headers: {
-          "api-key": process.env.BREVO_API_KEY,
+          "api-key": process.env.BREVO_SMTP_PASS,
           "Content-Type": "application/json",
           accept: "application/json",
         },
@@ -32,12 +32,8 @@ const sendOtp = async (to, otp) => {
     );
 
     console.log("OTP sent via Brevo API:", to);
-  } catch (error) {
-    console.error(
-      "Send OTP API error:",
-      error.response?.data || error.message
-    );
-    throw error;
+  } catch (err) {
+    console.log(err);
   }
 };
 
