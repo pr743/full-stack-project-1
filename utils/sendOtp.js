@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 const sendOtp = async (to, otp) => {
   try {
     const transporter = nodemailer.createTransport({
-      host: "smtp.relay.brevo.com",
+      host: "smtp-relay.brevo.com",
       port: 587,
       secure: false,
       auth: {
