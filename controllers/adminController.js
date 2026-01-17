@@ -80,7 +80,7 @@ exports.adminLogin = async (req, res) => {
 
 exports.verifyAdminOTP = async (req, res) => {
   try {
-    const { email, otp } = req.body;
+    let { email, otp } = req.body;
 
 
     if(!email || !otp){
