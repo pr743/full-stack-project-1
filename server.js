@@ -3,34 +3,28 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 require("dotenv").config();
 
-
 const app = express();
-const PORT = process.env.PORT   || 5000;
+const PORT = process.env.PORT || 5000;
 
-
-connectDB(); 
-
+connectDB();
 
 app.use(
   cors({
-       origin:(origin , callback)=>{
-        if(!origin)  return callback(null,true);
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
 
-       if (origin.endsWith(".vercel.app")) {
-        return callback(null,true);
-       }
-       return callback(new Error("Not allowed by CORS"));
-
-
-       },
-       credentials: true,
-       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-       allowedHeaders: ["Content-Type", "Authorization"],
+      if (origin.endsWith(".vercel.app")) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-
-app.options("*",cors());
+app.options("*", cors());
 
 app.use(express.json());
 
