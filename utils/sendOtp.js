@@ -7,7 +7,7 @@ const sendOtp = async (to, otp) => {
       port: 587,
       secure: false,
       auth: {
-        user: apikey,
+        user: "apikey",
         pass: process.env.BREVO_API_KEY,
       },
       connectionTimeout : 10000,
