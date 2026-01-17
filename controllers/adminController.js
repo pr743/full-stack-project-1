@@ -46,7 +46,10 @@ exports.adminRegister = async (req, res) => {
 
 exports.adminLogin = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    
+    let email = req.body.email;
+    let password = req.body.password;
+
     if (!email || !password){
       return res.status(400).json({ message: "Email & Password required" });
 
@@ -68,7 +71,7 @@ exports.adminLogin = async (req, res) => {
 
     await sendOtp(admin.email, otp);
 
-    res.json({ message: "OTP sent to email. Please verify." });
+   return   res.status(200).json({ message: "OTP sent to email. Please verify." });
   } catch (error) {
     console.error("Admin Login Error:", error);
     res.status(500).json({ message: error.message });
