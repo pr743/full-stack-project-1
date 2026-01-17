@@ -13,9 +13,10 @@ connectDB();
 
 app.use(
   cors({
-    origin:[
-      "https://student-app-dusky.vercel.app",
-    ],
+       origin:"https://student-app-dusky.vercel.app",
+       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+       allowedHeaders: ["Content-Type", "Authorization"],
+
     credentials: true,
   })
 );
