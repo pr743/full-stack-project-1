@@ -10,22 +10,20 @@ const sendOtp = async (to, otp) => {
         user: "apikey",
         pass: process.env.BREVO_API_KEY,
       },
-      tls:{
-        rejectUnauthorized:false,
+      tls: {
+        rejectUnauthorized: false,
       },
 
-
-      connectionTimeout : 30000,
-      greetingTimeout   : 30000,
-      socketTimeout   : 30000,
-
+      connectionTimeout: 30000,
+      greetingTimeout: 30000,
+      socketTimeout: 30000,
     });
 
     await transporter.verify();
     console.log("SMTP Connection verified");
-    
+
     await transporter.sendMail({
-      from:"Admin Panel <no-reply@studentapp.com>",
+      from: "Admin Panel <no-reply@studentapp.com>",
       to,
       subject: "Your OTP Code",
       html: `
@@ -42,7 +40,6 @@ const sendOtp = async (to, otp) => {
     throw error;
   }
 };
-
 
 const sendEmail = async (to, htmlContent) => {
   const transporter = nodemailer.createTransport({
@@ -61,4 +58,4 @@ const sendEmail = async (to, htmlContent) => {
   });
 };
 
-module.exports =  {sendOtp , sendEmail};
+module.exports = { sendOtp, sendEmail };
