@@ -63,7 +63,7 @@ exports.adminLogin = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
 
     
-     let otp = Math.floor(100000 + Math.random() * 900000).toString();
+    let otp = Math.floor(100000 + Math.random() * 900000).toString();
     admin.otp = otp;
     admin.otpExpireAt = Date.now() + 5 * 60 * 1000; 
     await admin.save();
