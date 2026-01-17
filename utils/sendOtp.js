@@ -11,7 +11,6 @@ const sendOtp = async (to, otp) => {
         pass: process.env.BREVO_SMTP_PASS,  
       },
     });
-
     await transporter.sendMail({
       from: `"Admin Panel" <${process.env.BREVO_SENDER_EMAIL}>`,
       to,
