@@ -14,8 +14,7 @@ connectDB();
 app.use(
   cors({
     origin:[
-      "http://localhost:5173",
-      "https://student-app-scbg.vercel.app",
+      "https://student-app-dusky.vercel.app",
     ],
     credentials: true,
   })
