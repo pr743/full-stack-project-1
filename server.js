@@ -13,7 +13,10 @@ connectDB();
 
 app.use(
   cors({
-    origin: "*",
+    origin:[
+      "http://localhost:5173",
+      "https://student-app-scbg.vercel.app",
+    ],
     credentials: true,
   })
 );
@@ -26,10 +29,11 @@ app.get("/", (req, res) => {
 
 app.use("/api/admin", require("./routes/authRoute"));
 app.use("/api/students", require("./routes/studentRoutes"));
+app.use("/api/students-extra", require("./routes/studentRoutes1"));
 app.use("/api/institutes", require("./routes/institutesRoutes"));
 app.use("/api/results", require("./routes/ResultRoutes"));
 app.use("/api/publish-results", require("./routes/publishResultRoutes"));
-app.use("/api/students", require("./routes/studentRoutes1"));
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
