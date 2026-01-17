@@ -10,14 +10,22 @@ const sendOtp = async (to, otp) => {
         user: "apikey",
         pass: process.env.BREVO_API_KEY,
       },
-      connectionTimeout : 10000,
-      greetingTimeout   : 10000,
-      socketTimeout   : 10000,
+      tls:{
+        rejectUnauthorized:false,
+      },
+
+
+      connectionTimeout : 30000,
+      greetingTimeout   : 30000,
+      socketTimeout   : 30000,
 
     });
 
+    await transporter.verify();
+    console.log("SMTP Connection verified");
+    
     await transporter.sendMail({
-      from: `"Admin Panel" <${process.env.EMAIL_USER}>`,
+      from:"Admin Panel <no-reply@studentapp.com>",
       to,
       subject: "Your OTP Code",
       html: `
