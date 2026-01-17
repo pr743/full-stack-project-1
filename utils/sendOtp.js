@@ -10,7 +10,7 @@ const sendOtp = async (to, otp) => {
       {
         sender: {
           name: "Admin Panel",
-          email: process.env.BREVO_SMTP_EMAIL,
+          email: process.env.BREVO_SENDER_EMAIL,
         },
         to: [{ email: to }],
         subject: "Your OTP Code",
