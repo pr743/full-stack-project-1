@@ -170,7 +170,7 @@ exports.resetPassword = async (req, res) => {
     if (!token || !password)
       return res.status(400).json({ message: "Token & password required" });
 
-     const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
 
 
