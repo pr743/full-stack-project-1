@@ -2,6 +2,9 @@ const axios = require("axios");
 
 const sendOtp = async (to, otp) => {
   try {
+  if(!process.env.BREVO_API_KEY){
+    throw new error("BREVO_API_KEY is missing");
+  }
     await axios.post(
       "https://api.brevo.com/v3/smtp/email",
       {
