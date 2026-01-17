@@ -2,12 +2,16 @@ const axios = require("axios");
 
 const sendOtp = async (to, otp) => {
   try {
+    if (!process.env.BREVO_API_KEY) {
+      throw new Error("BREVO_API_KEY missing");
+    }
+
     await axios.post(
       "https://api.brevo.com/v3/smtp/email",
       {
         sender: {
           name: "Student Result System",
-          email: process.env.BREVO_SENDER_EMAIL,
+          email: process.env.BREVO_SENDER_EMAIL, 
         },
         to: [{ email: to }],
         subject: "Your OTP Code",
@@ -20,7 +24,7 @@ const sendOtp = async (to, otp) => {
       },
       {
         headers: {
-          "api-key": process.env.BREVO_API_KEY,
+          "api-key": process.env.BREVO_API_KEY, 
           "Content-Type": "application/json",
           accept: "application/json",
         },
@@ -28,10 +32,10 @@ const sendOtp = async (to, otp) => {
       }
     );
 
-    console.log(" OTP email sent:", to);
+    console.log(" OTP sent successfully to:", to);
   } catch (err) {
     console.error(
-      " Brevo API OTP Error:",
+      " OTP Error:",
       err.response?.data || err.message
     );
     throw err;
