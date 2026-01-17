@@ -6,7 +6,7 @@ const sendOtp = async (to, otp) => {
       "https://api.brevo.com/v3/smtp/email",
       {
         sender: {
-          name: "Admin Panel",
+          name: "Student Result System",
           email: process.env.BREVO_SENDER_EMAIL,
         },
         to: [{ email: to }],
@@ -28,7 +28,7 @@ const sendOtp = async (to, otp) => {
       }
     );
 
-    console.log(" OTP sent via Brevo API:", to);
+    console.log(" OTP email sent:", to);
   } catch (err) {
     console.error(
       " Brevo API OTP Error:",
