@@ -127,7 +127,7 @@ exports.verifyAdminOTP = async (req, res) => {
 
 exports.resendOtp = async (req, res) => {
   try {
-    const { email } = req.body;
+    let  { email } = req.body;
     if (!email) return res.status(400).json({ message: "Email required" });
 
     email = email.trim().toLowerCase();
