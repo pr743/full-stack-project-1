@@ -63,7 +63,7 @@ exports.adminLogin = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
 
     
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+     let otp = Math.floor(100000 + Math.random() * 900000).toString();
     admin.otp = otp;
     admin.otpExpireAt = Date.now() + 5 * 60 * 1000; 
     await admin.save();
@@ -134,7 +134,7 @@ exports.resendOtp = async (req, res) => {
     const admin = await Admin.findOne({ email });
     if (!admin) return res.status(404).json({ message: "Admin not found" });
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    let otp = Math.floor(100000 + Math.random() * 900000).toString();
     admin.otp = otp;
     admin.otpExpireAt = Date.now() + 5 * 60 * 1000;
     await admin.save();
