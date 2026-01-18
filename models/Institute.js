@@ -11,7 +11,7 @@ const instituteSchema = new mongoose.Schema(
 
     type: {
       type: String,
-      enum: ["school", "college", "university"],
+      enum: ["school"],
       required: true,
     },
     
@@ -23,9 +23,12 @@ const instituteSchema = new mongoose.Schema(
     type:String,
     require:true,
     unique:true,
+   },
+
+   cratedBy:{
+    type : mongoose.Schema.Types.ObjectId
+
    }
-
-
 },
   {
     timestamps: true,
