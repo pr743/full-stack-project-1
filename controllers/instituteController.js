@@ -11,6 +11,7 @@ exports.createInstitute = async (req, res) => {
     const inst = await Institute.create({name ,type});
     res.status(200).json(inst);
   } catch (err) {
+    console.error("CREATE INSTITUTE ERROR:", err);
     res.status(400).json({ message: err.message });
   }
 };
