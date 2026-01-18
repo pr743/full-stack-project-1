@@ -2,7 +2,7 @@ const Institute = require("../models/Institute");
 
 exports.createInstitute = async (req, res) => {
   try {
-    const   {name , type} = req.body;
+    const {name , type} = req.body;
 
     if(!name || !type){
       return res.status(400).json({message:"name and type required"})
