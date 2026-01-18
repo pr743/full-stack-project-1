@@ -12,7 +12,7 @@ exports.createInstitute = async (req, res) => {
 exports.getAllInstitute = async (req, res) => {
   try {
     const data = await Institute.find();
-  res. status(200).json(data);
+     res.status(200).json(data);
     
   } catch (error) {
     res.status(500).json({message:error.message});
