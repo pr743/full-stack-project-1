@@ -7,7 +7,7 @@ exports.createInstitute = async (req, res) => {
     if(!name || !type){
       return res.status(400).json({message:"name and type required"})
     }
-    const inst = await Institute.create({name , type , createdBy:req.user.id});
+    const inst = await Institute.create({name ,type});
     res.status(200).json(inst);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -16,7 +16,7 @@ exports.createInstitute = async (req, res) => {
 
 exports.getAllInstitute = async (req, res) => {
   try {
-    const data = await Institute.find().sort({createdBy:-1});
+    const data = await Institute.find();
      res.status(200).json(data);
     
   } catch (error) {

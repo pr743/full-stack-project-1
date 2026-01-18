@@ -12,12 +12,6 @@ const instituteSchema = new mongoose.Schema(
       enum: ["school"],
       required: true,
     },
-    
-   createdBy:{
-    type : mongoose.Schema.Types.ObjectId,
-    ref:"Admin",
-    required:true
-   },
 },
   {
     timestamps: true,
