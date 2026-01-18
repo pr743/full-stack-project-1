@@ -7,28 +7,17 @@ const instituteSchema = new mongoose.Schema(
       trim:true
     },
 
-    
-
     type: {
       type: String,
       enum: ["school"],
       required: true,
     },
     
-   address:{
-    type: String,
+   createdBy:{
+    type : mongoose.Schema.Types.ObjectId,
+    ref:"Admin",
+    required:true
    },
-
-   code:{
-    type:String,
-    require:true,
-    unique:true,
-   },
-
-   cratedBy:{
-    type : mongoose.Schema.Types.ObjectId
-
-   }
 },
   {
     timestamps: true,
