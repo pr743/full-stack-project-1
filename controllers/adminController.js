@@ -151,8 +151,11 @@ exports.resendOtp = async (req, res) => {
 
 exports.forgotPassword = async (req, res) => {
   try {
-    const { email } = req.body;
-    email = email.trim().toLowerCase();
+    const  email  = req.body.email.toLowerCase();
+
+
+    if(!process.env.BREVO_API_KEY)   throw new Error("Brevo API key missing");
+  
     const admin = await Admin.findOne({ email });
     if (!admin) return res.status(404).json({ message: "Email not found" });
 
@@ -166,7 +169,7 @@ exports.forgotPassword = async (req, res) => {
 
     const resetLink = `${process.env.FRONTEND_URL}/admin/reset-password/${token}`;
 
-    await sendResetPasswordEmail(admin.email,resetLink);
+    await sendResetPasswordEmail(email,resetLink);
 
     res.json({ message: "Reset link sent to your email" });
   } catch (error) {
