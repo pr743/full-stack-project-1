@@ -17,13 +17,15 @@ const studentAuth = async (req, res, next) => {
 
     const decoded = jwt.verify(token, JWT_SECRET);
 
+
     const student = await Student.findById(decoded.id).select("-password");
 
     if (!student) {
       return res.status(401).json({ message: "student not found" });
     }
 
-    req.student = student;
+    req.studentId = student._id;
+    req.student  = student;
     next();
   } catch (error) {
     res.status(401).json({ message: "Invalid Token" });
