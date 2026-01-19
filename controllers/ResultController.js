@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 exports.createResult = async (req, res) => {
   try {
-    let { studentId, classLevel , types } = req.body;
+    let { studentId, classLevel ,types } = req.body;
 
     if (!classLevel && studentId) {
       const student = await Student.findById(studentId).select("classLevel");

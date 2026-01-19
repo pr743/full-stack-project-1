@@ -40,6 +40,56 @@ const sendOtp = async (to, otp) => {
     );
     throw err;
   }
+
+
 };
 
-module.exports = { sendOtp };
+
+
+const  sendResetPasswordEmail = async (to , resetLink) =>{
+  try {
+   if (!process.env.BREVO_API_KEY) {
+      throw new Error("BREVO_API_KEY missing");
+    }
+
+   await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: "Student Result System",
+          email: process.env.BREVO_SENDER_EMAIL,
+        },
+        to: [{ email: to }],
+        subject: "Reset Your Password",
+        htmlContent: `
+          <h2>Password Reset Request</h2>
+          <p>You requested to reset your password.</p>
+          <a href="${resetLink}" 
+             style="display:inline-block;padding:12px 20px;
+             background:#2563eb;color:#fff;
+             text-decoration:none;border-radius:6px;">
+             Reset Password
+          </a>
+          <p>This link is valid for <b>15 minutes</b>.</p>
+          <p>If you didn't request this, ignore this email.</p>
+        `,
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+    } 
+  );
+
+  console.log(" Reset link sent to:", to);
+    
+  } catch (error) {
+    console.error("Reset  email error:",err.response?.data || err.message);
+    throw err;
+      
+  }
+}
+
+module.exports = { sendOtp , sendResetPasswordEmail };

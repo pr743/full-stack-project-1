@@ -164,16 +164,9 @@ exports.forgotPassword = async (req, res) => {
     admin.resetTokenExpiry = Date.now() + 15 * 60 * 1000; 
     await admin.save();
 
-    const resetUrl = `${process.env.FRONTEND_URL}/admin/reset-password?token=${resetToken}`;
+    const resetLink = `${process.env.FRONTEND_URL}/admin/reset-password?token=${resetToken}`;
 
-    await sendEmail(
-      admin.email,
-      `<h2>Password Reset</h2>
-       <p>Click the link below to reset your password:</p>
-       <a href="${resetUrl}"  target="_blank">${resetUrl}</a>
-       <p>This link will expire in 15 minutes.</p>
-      `
-    );
+    await sendEmail(admin.email,resetLink);
 
     res.json({ message: "Reset link sent to your email" });
   } catch (error) {
