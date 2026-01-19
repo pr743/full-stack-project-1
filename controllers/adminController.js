@@ -174,6 +174,9 @@ exports.forgotPassword = async (req, res) => {
 exports.resetPassword = async (req, res) => {
   try {
     const { token, password } = req.body;
+
+
+    console.log("RESET PASSWORD BODY:",req.body);
     if (!token || !password)
       return res.status(400).json({ message: "Token & password required" });
 
@@ -183,10 +186,15 @@ exports.resetPassword = async (req, res) => {
       resetToken: hashedToken,
       resetTokenExpiry: { $gt: Date.now() },
     });
-    if (!admin)
-      return res.status(400).json({ message: "Invalid or expired token" });
+    if (!admin){
+       return res.status(400).json({ message: "Invalid or expired token" });
 
-    admin.password = await bcrypt.hash(password, 10);
+    }
+      
+
+    const salt = await bcrypt.genSalt(10);
+
+    admin.password = await bcrypt.hash(password, salt);
     admin.resetToken = undefined;
     admin.resetTokenExpiry = undefined;
     await admin.save();
@@ -200,6 +208,7 @@ exports.resetPassword = async (req, res) => {
       admin: { id: admin._id, name: admin.name, email: admin.email },
     });
   } catch (error) {
+    console.error("RESET PASSWORD ERROR:", err);
     res.status(500).json({ message: "Server error" });
   }
 };
