@@ -73,6 +73,7 @@ const sendResetPasswordEmail = async (to, resetLink) => {
           "Content-Type": "application/json",
           accept: "application/json",
         },
+        timeout:20000   
       },
     );
 
