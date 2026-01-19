@@ -79,7 +79,7 @@ const sendResetPasswordEmail = async (to, resetLink) => {
     console.log(" Reset link sent to:", to);
   } catch (error) {
     console.error("Reset  email error:", err.response?.data || err.message);
-    throw err;
+    throw error;
   }
 };
 

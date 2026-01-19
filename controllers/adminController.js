@@ -1,7 +1,7 @@
 const Admin = require("../models/Admin");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { sendOtp , sendEmail } = require("../utils/sendOtp");
+const { sendOtp , sendResetPasswordEmail } = require("../utils/sendOtp");
 const crypto = require("crypto");
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -164,9 +164,9 @@ exports.forgotPassword = async (req, res) => {
     admin.resetTokenExpiry = Date.now() + 15 * 60 * 1000; 
     await admin.save();
 
-    const resetLink = `${process.env.FRONTEND_URL}/admin/reset-password?token=${resetToken}`;
+    const resetLink = `${process.env.FRONTEND_URL}/admin/reset-password/${token}`;
 
-    await sendEmail(admin.email,resetLink);
+    await sendResetPasswordEmail(admin.email,resetLink);
 
     res.json({ message: "Reset link sent to your email" });
   } catch (error) {
