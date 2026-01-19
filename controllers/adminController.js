@@ -1,7 +1,7 @@
 const Admin = require("../models/Admin");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { sendOtp , sendResetPasswordEmail } = require("../utils/sendOtp");
+const { sendOtp, sendResetPasswordEmail } = require("../utils/sendOtp");
 const crypto = require("crypto");
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -46,13 +46,11 @@ exports.adminRegister = async (req, res) => {
 
 exports.adminLogin = async (req, res) => {
   try {
-    
     let email = req.body.email;
     let password = req.body.password;
 
-    if (!email || !password){
+    if (!email || !password) {
       return res.status(400).json({ message: "Email & Password required" });
-
     }
     email = email.trim().toLowerCase();
 
@@ -63,15 +61,16 @@ exports.adminLogin = async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ message: "Invalid credentials" });
 
-    
     let otp = Math.floor(100000 + Math.random() * 900000).toString();
     admin.otp = otp;
-    admin.otpExpireAt = Date.now() + 5 * 60 * 1000; 
+    admin.otpExpireAt = Date.now() + 5 * 60 * 1000;
     await admin.save();
 
     await sendOtp(admin.email, otp);
 
-   return   res.status(200).json({ message: "OTP sent to email. Please verify." });
+    return res
+      .status(200)
+      .json({ message: "OTP sent to email. Please verify." });
   } catch (error) {
     console.error("Admin Login Error:", error);
     res.status(500).json({ message: error.message });
@@ -82,32 +81,26 @@ exports.verifyAdminOTP = async (req, res) => {
   try {
     let { email, otp } = req.body;
 
-
-    if(!email || !otp){
+    if (!email || !otp) {
       return res.status(400).json({ message: "Email & OTP required" });
     }
 
     email = email.trim().toLowerCase();
 
-    const admin = await Admin.findOne({email});
+    const admin = await Admin.findOne({ email });
     if (!admin) return res.status(404).json({ message: "Admin not found" });
 
-    if (!admin.otp || admin.otpExpireAt < Date.now()){
-       return res.status(400).json({ message: "OTP expired" });
-
+    if (!admin.otp || admin.otpExpireAt < Date.now()) {
+      return res.status(400).json({ message: "OTP expired" });
     }
-     
-    if(String(admin.otp) !==  String(otp) ){
+
+    if (String(admin.otp) !== String(otp)) {
       return res.status(400).json({ message: "Invalid OTP" });
-
     }
-
 
     admin.isVerified = true;
     admin.otp = null;
     admin.otpExpireAt = null;
-
-
 
     await admin.save();
 
@@ -127,7 +120,7 @@ exports.verifyAdminOTP = async (req, res) => {
 
 exports.resendOtp = async (req, res) => {
   try {
-    let  { email } = req.body;
+    let { email } = req.body;
     if (!email) return res.status(400).json({ message: "Email required" });
 
     email = email.trim().toLowerCase();
@@ -151,33 +144,29 @@ exports.resendOtp = async (req, res) => {
 
 exports.forgotPassword = async (req, res) => {
   try {
-    const  email  = req.body.email.toLowerCase();
+    const email = req.body.email.toLowerCase();
 
+    if (!process.env.BREVO_API_KEY) throw new Error("Brevo API key missing");
 
-    if(!process.env.BREVO_API_KEY)   throw new Error("Brevo API key missing");
-  
     const admin = await Admin.findOne({ email });
     if (!admin) return res.status(404).json({ message: "Email not found" });
 
     const resetToken = crypto.randomBytes(32).toString("hex");
-    const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
-
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
 
     admin.resetToken = hashedToken;
-    admin.resetTokenExpiry = Date.now() + 15 * 60 * 1000; 
+    admin.resetTokenExpiry = Date.now() + 15 * 60 * 1000;
     await admin.save();
-
-
-
-
 
     const resetLink = `${process.env.FRONTEND_URL}/admin/reset-password/${resetToken}`;
 
-    await sendResetPasswordEmail(email,resetLink);
+    await sendResetPasswordEmail(email, resetLink);
 
     res.json({ message: "Reset link sent to your email" });
   } catch (error) {
-    console.error("FORGOT PASSWORD ERROR:", error.message);
     res.status(500).json({ message: error.message });
   }
 };
@@ -188,9 +177,7 @@ exports.resetPassword = async (req, res) => {
     if (!token || !password)
       return res.status(400).json({ message: "Token & password required" });
 
-     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
-
-
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
     const admin = await Admin.findOne({
       resetToken: hashedToken,
@@ -213,7 +200,6 @@ exports.resetPassword = async (req, res) => {
       admin: { id: admin._id, name: admin.name, email: admin.email },
     });
   } catch (error) {
-   
     res.status(500).json({ message: "Server error" });
   }
 };
