@@ -11,7 +11,7 @@ const sendOtp = async (to, otp) => {
       {
         sender: {
           name: "Student Result System",
-          email: process.env.BREVO_SENDER_EMAIL, 
+          email: process.env.BREVO_SENDER_EMAIL,
         },
         to: [{ email: to }],
         subject: "Your OTP Code",
@@ -24,35 +24,28 @@ const sendOtp = async (to, otp) => {
       },
       {
         headers: {
-          "api-key": process.env.BREVO_API_KEY, 
+          "api-key": process.env.BREVO_API_KEY,
           "Content-Type": "application/json",
           accept: "application/json",
         },
         timeout: 15000,
-      }
+      },
     );
 
     console.log(" OTP sent successfully to:", to);
   } catch (err) {
-    console.error(
-      " OTP Error:",
-      err.response?.data || err.message
-    );
+    console.error(" OTP Error:", err.response?.data || err.message);
     throw err;
   }
-
-
 };
 
-
-
-const  sendResetPasswordEmail = async (to , resetLink) =>{
+const sendResetPasswordEmail = async (to, resetLink) => {
   try {
-   if (!process.env.BREVO_API_KEY) {
+    if (!process.env.BREVO_API_KEY) {
       throw new Error("BREVO_API_KEY missing");
     }
 
-   await axios.post(
+    await axios.post(
       "https://api.brevo.com/v3/smtp/email",
       {
         sender: {
@@ -80,16 +73,14 @@ const  sendResetPasswordEmail = async (to , resetLink) =>{
           "Content-Type": "application/json",
           accept: "application/json",
         },
-    } 
-  );
+      },
+    );
 
-  console.log(" Reset link sent to:", to);
-    
+    console.log(" Reset link sent to:", to);
   } catch (error) {
-    console.error("Reset  email error:",err.response?.data || err.message);
+    console.error("Reset  email error:", err.response?.data || err.message);
     throw err;
-      
   }
-}
+};
 
-module.exports = { sendOtp , sendResetPasswordEmail };
+module.exports = { sendOtp, sendResetPasswordEmail };
