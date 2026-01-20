@@ -32,7 +32,7 @@ const studentSchema = new mongoose.Schema(
     instituteId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Institute",
-      require:true,
+      require:false,
     },
 
 
