@@ -130,15 +130,12 @@ exports.getAllStudents = async (req, res) => {
 
 exports.getStudentProfile = async (req, res) => {
   try {
-
     return res.json(req.student);
   } catch (error) {
     console.error("Student Profile Error:", error);
     res.status(500).json({ error: error.message });
   }
 };
-
-
 
 exports.updateStudent = async (req, res) => {
   try {
