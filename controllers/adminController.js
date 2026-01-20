@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { sendOtp, sendResetPasswordEmail } = require("../utils/sendOtp");
 const crypto = require("crypto");
-const bcryptjs = require("bcryptjs");
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
