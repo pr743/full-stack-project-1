@@ -2,7 +2,13 @@ const Result = require("../models/Result");
 
 exports.studentDashboard = async (req, res) => {
   try {
-    const student = req.student;
+    console.log("STUDENT ID:", req.studentId);
+    const student = await Student.findById(req.studentId).select("-password");
+
+    if(!student){
+      res.status(500).json({ message: "Student not found" });
+
+    }
 
     const result = await Result.findOne({
       studentId: student._id,
