@@ -127,8 +127,6 @@ exports.getAllStudents = async (req, res) => {
 
 exports.getStudentProfile = async (req, res) => {
   try {
-    const studentId = req.student;
-
     const student = await Student.findById(studentId).select("-password");
 
     if (!student) {
