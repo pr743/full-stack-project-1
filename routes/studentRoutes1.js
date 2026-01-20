@@ -9,7 +9,7 @@ const {
 const studentAuth = require("../middleware/studentAuth");
 const Result = require("../models/Result");
 
-// ✅ REMOVE duplicate prefix
+
 router.get("/dashboard", studentAuth, studentDashboard);
 router.get("/result", studentAuth, studentResult);
 
