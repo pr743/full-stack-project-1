@@ -11,8 +11,8 @@ const PDFDocument = require("pdfkit");
 const Result = require("../models/Result");
 
 
-router.get("/students-extra/dashboard", studentAuth, studentDashboard);
-router.get("/students-extra/result", studentAuth, studentResult);
+router.get("/api/students-extra/dashboard", studentAuth, studentDashboard);
+router.get("/api/students-extra/result", studentAuth, studentResult);
 
 
 router.get("/marksheet/pdf", studentAuth, async (req, res) => {
