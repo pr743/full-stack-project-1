@@ -9,7 +9,9 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 exports.adminRegister = async (req, res) => {
   try {
-    const { name, email, password, phone } = req.body;
+    console.log("REQ BODY:", req.body); 
+
+    const { name, email, password, phone } = req.body  || {};
     if (!name || !email || !password || !phone) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -43,6 +45,7 @@ exports.adminRegister = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error("🔥 ADMIN REGISTER ERROR:", error);
     res.status(500).json({ message: error.message });
   }
 };
