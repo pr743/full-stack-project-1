@@ -8,7 +8,6 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 exports.adminRegister = async (req, res) => {
   try {
-    console.log("REQ BODY:", req.body); 
 
     let { name, email, password, phone } = req.body  || {};
     if (!name || !email || !password || !phone) {
@@ -44,7 +43,6 @@ exports.adminRegister = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("🔥 ADMIN REGISTER ERROR:", error);
     res.status(500).json({ message: error.message });
   }
 };
