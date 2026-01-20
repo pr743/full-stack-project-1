@@ -13,11 +13,13 @@ const studentAuth = async (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.studentId = decoded.id;
+    const student = await Student.findById(decoded.id).select("-password");
 
-    if (!decoded) {
+    if (!student) {
       return res.status(401).json({ message: "Student not found" });
     }
+
+    req.student = student;
 
     next();
   } catch (error) {

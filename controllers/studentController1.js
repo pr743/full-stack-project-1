@@ -2,9 +2,7 @@ const Result = require("../models/Result");
 
 exports.studentDashboard = async (req, res) => {
   try {
-    const student = req.student._id;
-     console.log("STUDENT ID:", student);
-
+   const student = req.student;
     const result = await Result.findOne({
       studentId: student._id,
       isPublished: true,
