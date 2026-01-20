@@ -11,7 +11,7 @@ exports.adminRegister = async (req, res) => {
   try {
     console.log("REQ BODY:", req.body); 
 
-    const { name, email, password, phone } = req.body  || {};
+    let { name, email, password, phone } = req.body  || {};
     if (!name || !email || !password || !phone) {
       return res.status(400).json({ message: "All fields are required" });
     }
