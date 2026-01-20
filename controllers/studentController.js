@@ -130,12 +130,7 @@ exports.getAllStudents = async (req, res) => {
 
 exports.getStudentProfile = async (req, res) => {
   try {
-    const student = await Student.findById(req.student._id).select("-password");
-
-    if (!student) {
-      return res.status(404).json({ message: "Student not found" });
-    }
-
+    
     return res.json(student);
   } catch (error) {
     console.error("Student Profile Error:", error);
