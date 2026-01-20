@@ -34,8 +34,6 @@ const studentSchema = new mongoose.Schema(
       ref: "Institute",
       require:false,
     },
-
-
   },
   {
     timestamps: true,
