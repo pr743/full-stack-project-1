@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { sendOtp, sendResetPasswordEmail } = require("../utils/sendOtp");
 const crypto = require("crypto");
+const bcryptjs = require("bcryptjs");
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -20,7 +21,9 @@ exports.adminRegister = async (req, res) => {
       return res.status(400).json({ message: "Admin already exists" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const salt = await bcrypt.genSalt(10)
+
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const admin = await Admin.create({
       name,
