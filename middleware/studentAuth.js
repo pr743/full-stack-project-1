@@ -19,9 +19,7 @@ const studentAuth = async (req, res, next) => {
       return res.status(401).json({ message: "Student not found" });
     }
 
-   
-    req.studentId = student._id;
-    req.student = student;
+     req.student = student;
 
     next();
   } catch (error) {

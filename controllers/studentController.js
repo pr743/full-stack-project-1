@@ -3,9 +3,6 @@ const Institute = require("../models/Institute");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
-
 
 exports.createStudent = async (req, res) => {
   try {
@@ -130,7 +127,7 @@ exports.getAllStudents = async (req, res) => {
 
 exports.getStudentProfile = async (req, res) => {
   try {
-    const studentId = req.user.id;
+    const studentId = req.student;
 
     const student = await Student.findById(studentId).select("-password");
 
